@@ -901,7 +901,8 @@ struct TabContextMenuState {
 struct TabBarView: View {
     @Environment(BonsplitController.self) private var controller
     @Environment(SplitViewController.self) private var splitViewController
-    
+    @Environment(\.bonsplitUIScale) private var uiScale
+
     @Bindable var pane: PaneState
     let isFocused: Bool
     var showSplitButtons: Bool = true
@@ -1759,10 +1760,10 @@ struct TabBarView: View {
         switch icon {
         case .systemImage(let name):
             Image(systemName: name)
-                .font(.system(size: 12))
+                .font(.system(size: 12 * uiScale))
         case .emoji(let value, let scale):
             Text(value)
-                .font(.system(size: emojiIconFontSize(scale: scale)))
+                .font(.system(size: emojiIconFontSize(scale: scale) * uiScale))
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
         case .imageData(let data):
